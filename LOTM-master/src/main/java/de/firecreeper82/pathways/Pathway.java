@@ -6,6 +6,7 @@ import de.firecreeper82.pathways.impl.demoness.DemonessPathway;
 import de.firecreeper82.pathways.impl.door.DoorPathway;
 import de.firecreeper82.pathways.impl.fool.FoolPathway;
 import de.firecreeper82.pathways.impl.sun.SunPathway;
+import de.firecreeper82.pathways.impl.red_priest.Red_PriestPathway;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.UUID;
@@ -22,7 +23,10 @@ public abstract class Pathway {
 
     public static final String[] validNames = new String[]{
             "sun",
-            "fool"
+            "fool",
+            "red_priest",
+            "door",
+            "demoness"
     };
 
     public Items items;
@@ -121,6 +125,13 @@ public abstract class Pathway {
                 Plugin.instance.getServer().getPluginManager().registerEvents(beyonder, Plugin.instance);
                 return pathwayObject;
             }
+            case "red_priest" -> {
+                pathwayObject = new Red_PriestPathway(uuid, sequence);
+                Beyonder beyonder = new Beyonder(uuid, pathwayObject);
+                Plugin.beyonders.put(uuid, beyonder);
+                Plugin.instance.getServer().getPluginManager().registerEvents(beyonder, Plugin.instance);
+                return pathwayObject;
+            }
             default -> {
                 return null;
             }
@@ -143,6 +154,9 @@ public abstract class Pathway {
             }
             case "demoness" -> {
                 return DemonessPathway.getNames();
+            }
+            case "red_priest" -> {
+                return Red_PriestPathway.getNames();
             }
             default -> {return null;}
         }

@@ -4,8 +4,12 @@ package de.firecreeper82.pathways.impl.red_priest;
 import de.firecreeper82.lotm.Plugin;
 import de.firecreeper82.pathways.Pathway;
 import de.firecreeper82.pathways.Sequence;
+import net.minecraft.world.level.block.Blocks;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -14,6 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.*;
 

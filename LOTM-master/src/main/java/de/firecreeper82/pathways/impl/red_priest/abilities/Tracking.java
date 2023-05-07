@@ -34,19 +34,30 @@ public class Tracking extends Ability {
         pathway.getSequence().getUsesAbilities()[identifier - 1] = true;
         Location loc = p.getLocation();
         new BukkitRunnable() {
+            int drain = 0;
             @Override
             public void run () {
 
                 for(Entity entity : Objects.requireNonNull(loc.getWorld()).getNearbyEntities(loc, 10, 10, 10)) {
 
-                    if(entity instanceof LivingEntity &&  pathway.getSequence().getUsesAbilities()[identifier - 1]) {
+                    if(entity instanceof LivingEntity &&  pathway.getSequence().getUsesAbilities()[identifier - 1] && entity !=p && entity.getWorld().getNearbyEntities(entity.getLocation(),10,10,10).contains(p)) {
                         ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,2,1));
-                        p.removePotionEffect(PotionEffectType.GLOWING);
+
                     }
+
                     //if(entity instanceof LivingEntity && entity != Objects.requireNonNull(loc.getWorld().getNearbyEntities(loc, 10, 10, 10))) {
                       //  ((LivingEntity) entity).removePotionEffect(PotionEffectType.GLOWING);
                     //}
 
+                }
+                drain++;
+                if(drain >= 20) {
+                    drain = 0;
+                    pathway.getSequence().removeSpirituality(5);
+                }
+                if(pathway.getBeyonder().getSpirituality() <=20 ||!pathway.getSequence().getUsesAbilities()[identifier - 1])
+                {
+                    cancel();
                 }
 
             }
@@ -62,6 +73,6 @@ public class Tracking extends Ability {
 
     @Override
     public ItemStack getItem() {
-        return Red_PriestItems.createItem(Material.ENDER_EYE, "Tracking", "50", identifier, 9, Objects.requireNonNull(Bukkit.getPlayer(pathway.getUuid())).getName());
+        return Red_PriestItems.createItem(Material.ENDER_EYE, "Tracking", "5/s", identifier, 9, Objects.requireNonNull(Bukkit.getPlayer(pathway.getUuid())).getName());
     }
 }

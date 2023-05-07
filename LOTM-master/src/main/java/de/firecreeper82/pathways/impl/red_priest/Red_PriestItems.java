@@ -3,10 +3,7 @@ package de.firecreeper82.pathways.impl.red_priest;
 import de.firecreeper82.pathways.Ability;
 import de.firecreeper82.pathways.Items;
 import de.firecreeper82.pathways.Pathway;
-import de.firecreeper82.pathways.impl.red_priest.abilities.Fireball;
-import de.firecreeper82.pathways.impl.red_priest.abilities.Provoke;
-import de.firecreeper82.pathways.impl.red_priest.abilities.Tracking;
-import de.firecreeper82.pathways.impl.red_priest.abilities.Trap;
+import de.firecreeper82.pathways.impl.red_priest.abilities.*;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -94,8 +91,8 @@ public class Red_PriestItems extends Items {
         public void createItems() {
         addAbility(new Tracking(1, pathway, 9, this));
         addAbility(new Provoke(2,pathway,8,this));
-        addAbility(new Fireball(3,pathway,7,this));
-        addAbility(new Trap(4,pathway,6,this));
+        addAbility(new FireAttacks(3,pathway,7,this));
+
     }
 
 

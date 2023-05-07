@@ -79,7 +79,7 @@ public class Provoke extends Ability {
 
     @Override
     public ItemStack getItem() {
-        return Red_PriestItems.createItem(Material.RED_DYE, "Provoke", "200", identifier, 8, Objects.requireNonNull(Bukkit.getPlayer(pathway.getUuid())).getName());
+        return Red_PriestItems.createItem(Material.RED_DYE, "Provoke", "60", identifier, 8, Objects.requireNonNull(Bukkit.getPlayer(pathway.getUuid())).getName());
     }
 }
 
