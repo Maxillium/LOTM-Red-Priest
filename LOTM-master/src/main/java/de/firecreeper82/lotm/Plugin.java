@@ -134,6 +134,7 @@ public final class Plugin extends JavaPlugin{
         potions.add(new FoolPotions());
         potions.add(new DoorPotions());
         potions.add(new DemonessPotions());
+        potions.add(new Red_PriestPotions());
     }
 
     @Override

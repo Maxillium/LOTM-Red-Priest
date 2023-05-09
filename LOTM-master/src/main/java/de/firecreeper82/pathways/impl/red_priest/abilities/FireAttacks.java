@@ -32,7 +32,6 @@ public class FireAttacks extends Ability {
     private FireAttacks.Category selectedCategory = Category.Fireball;
     private final FireAttacks.Category[] categories = FireAttacks.Category.values();
     private int selected = 0;
-    private boolean teleport = false;
     public FireAttacks(int identifier, Pathway pathway, int sequence, Items items) {
         super(identifier, pathway, sequence, items);
         items.addToSequenceItems(identifier - 1, sequence);
@@ -57,8 +56,8 @@ public class FireAttacks extends Ability {
     enum Category {
         Fireball("Summon flames"),
         FireSpear("Summon a flaming spear"),
-        Tp("Click to tp after fire attacks"),
         Self_Explode("Create an explosion around yourself");
+
 
 
 
@@ -75,10 +74,9 @@ public class FireAttacks extends Ability {
             fireball();
         if(selectedCategory == Category.FireSpear)
             firespear();
-        if(selectedCategory == Category.Tp)
-            Tp();
         if(selectedCategory == Category.Self_Explode)
             self_explode();
+
     }
 
     private void fireball() {
@@ -99,6 +97,9 @@ public class FireAttacks extends Ability {
 
             if(loc.getBlock().getType().isSolid()) {
                 loc.clone().subtract(vector).getBlock().setType(Material.FIRE);
+
+                    p.teleport(loc);
+
                 break;
             }
 
@@ -110,11 +111,8 @@ public class FireAttacks extends Ability {
                 livingEntity.setFireTicks(20 * 40);
                 cancelled = true;
             }
-            if(teleport)
-            {
-                p.teleport(loc);
-            }
-            world.createExplosion(loc,1,false,true,p);
+
+            world.createExplosion(loc,2,false,true,p);
             if(cancelled)
                 break;
         }
@@ -199,7 +197,7 @@ public class FireAttacks extends Ability {
                         if(random.nextInt(4) == 0)
                             continue;
 
-                        block.setType(Material.NETHERRACK);
+                        block.setType(Material.BASALT);
                     }
 
                     p.getWorld().spawnParticle(Particle.DRIP_LAVA, fireLoc, 200, 5, 5, 5, 0);
@@ -211,10 +209,9 @@ public class FireAttacks extends Ability {
                         livingEntity.damage(8, p);
                         livingEntity.setFireTicks(20 * 6);
                     }
-                    if(teleport)
-                    {
-                        p.teleport(fireLoc);
-                    }
+
+                    p.teleport(fireLoc);
+
 
                     cancel();
                 }
@@ -292,15 +289,15 @@ public class FireAttacks extends Ability {
             playerLoc.add(dir);
         }
     }
-    private void Tp() {
-        teleport = true;
-    }
+
     private void self_explode()
     {
         Location loc = p.getLocation();
         p.getWorld().createExplosion(loc, 2,true,true,p);
 
     }
+
+
     @Override
     //Cycle through categories on left click
     public void leftClick() {
@@ -319,7 +316,7 @@ public class FireAttacks extends Ability {
     }
     @Override
     public ItemStack getItem () {
-        return Red_PriestItems.createItem(Material.FIRE_CHARGE, "Fire-Attacks", "50", identifier, sequence, pathway.getBeyonder().getPlayer().getName());
+        return Red_PriestItems.createItem(Material.FIRE_CHARGE, "Fire-Attacks", "100", identifier, sequence, pathway.getBeyonder().getPlayer().getName());
     }
 }
 

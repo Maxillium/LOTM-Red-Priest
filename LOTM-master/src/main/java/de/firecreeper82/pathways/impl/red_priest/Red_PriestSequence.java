@@ -131,6 +131,7 @@ public class Red_PriestSequence extends Sequence implements Listener{
 
 
 
+
     //Passive effects
     public void initEffects() {
         PotionEffectType[] resistances = {

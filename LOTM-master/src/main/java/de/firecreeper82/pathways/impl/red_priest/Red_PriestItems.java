@@ -92,6 +92,9 @@ public class Red_PriestItems extends Items {
         addAbility(new Tracking(1, pathway, 9, this));
         addAbility(new Provoke(2,pathway,8,this));
         addAbility(new FireAttacks(3,pathway,7,this));
+        addAbility(new Reaping(4,pathway,5,this));
+        addAbility(new Flame_transform(5,pathway,4,this));
+        addAbility(new Crimson_Guard(6,pathway,4,this));
 
     }
 

@@ -49,7 +49,7 @@ public class Provoke extends Ability {
                                 p.chat(provocations[random]);
                             }
                             ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 30, 1, true,true ));
-                            p.removePotionEffect(PotionEffectType.SLOW);
+
                         }
                     }
 
@@ -59,7 +59,7 @@ public class Provoke extends Ability {
                                 p.chat(provocations[random]);
                             }
                             ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 30, 1, true, true ));
-                            p.removePotionEffect(PotionEffectType.WEAKNESS);
+
                         }
                     }
                     else if (random == 2) {
@@ -68,7 +68,7 @@ public class Provoke extends Ability {
                                 p.chat(provocations[random]);
                             }
                             ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 2, 1, true, true ));
-                            p.removePotionEffect(PotionEffectType.WITHER);
+
                         }
                     }
                 }
