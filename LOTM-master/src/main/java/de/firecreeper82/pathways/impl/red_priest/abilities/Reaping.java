@@ -21,7 +21,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
-//Intended to put the Glowing effect on nearby entities in order to locate them. As a consequence should bypass Invisibility too.
 public class  Reaping extends Ability implements Listener {
     boolean Reaping = false;
     Player p = pathway.getBeyonder().getPlayer();
@@ -37,6 +36,7 @@ public class  Reaping extends Ability implements Listener {
             @Override
             public void run() {
                 Reaping = true;
+                return;
 
             }
         }.runTaskTimer(Plugin.instance, 0, 0);
@@ -64,7 +64,7 @@ public class  Reaping extends Ability implements Listener {
         if(!Reaping)
         {
             p.sendMessage("Reaping is off");
-            ;
+            return;
         }
 
     }

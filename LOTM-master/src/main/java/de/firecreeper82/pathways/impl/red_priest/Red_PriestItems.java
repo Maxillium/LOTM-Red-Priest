@@ -94,8 +94,10 @@ public class Red_PriestItems extends Items {
         addAbility(new FireAttacks(3,pathway,7,this));
         addAbility(new Reaping(4,pathway,5,this));
         addAbility(new Flame_transform(5,pathway,4,this));
-        addAbility(new Crimson_Guard(6,pathway,4,this));
-
+        addAbility(new Crimson_GuardAddition(6,pathway,4,this));
+        addAbility(new Crimson_GuardSubtraction(7,pathway,4,this));
+        addAbility(new Steel(8,pathway,4,this));
+        addAbility(new Fortify(9,pathway,4,this));
     }
 
 

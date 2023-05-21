@@ -46,29 +46,32 @@ public class Provoke extends Ability {
 
                         if (entity instanceof LivingEntity) {
                             if(entity == getP() && entity !=p) {
-                                p.chat(provocations[random]);
+                                p.sendMessage(provocations[random]);
                             }
-                            ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 30, 1, true,true ));
-
+                            if(entity == getP() && entity !=p) {
+                                ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 2, 1, true, true));
+                            }
                         }
                     }
 
                     else if (random == 1) {
                         if (entity instanceof LivingEntity) {
                             if(entity == getP() && entity !=p) {
-                                p.chat(provocations[random]);
+                                p.sendMessage(provocations[random]);
                             }
-                            ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 30, 1, true, true ));
-
+                            if(entity == getP() && entity !=p) {
+                                ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2, 1, true, true));
+                            }
                         }
                     }
                     else if (random == 2) {
                         if (entity instanceof LivingEntity) {
                             if(entity == getP() && entity !=p) {
-                                p.chat(provocations[random]);
+                                p.sendMessage(provocations[random]);
                             }
-                            ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 2, 1, true, true ));
-
+                            if(entity == getP() && entity !=p) {
+                                ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 2, 1, true, true));
+                            }
                         }
                     }
                 }
