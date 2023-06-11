@@ -28,7 +28,6 @@ public class SunSequence extends Sequence {
         Arrays.fill(usesAbilities, false);
 
         abilities = new ArrayList<>();
-        recordables = new ArrayList<>();
 
         sequenceEffects = new HashMap<>();
         sequenceResistances = new HashMap<>();
@@ -63,6 +62,7 @@ public class SunSequence extends Sequence {
                 new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 1, false, false, false),
                 new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 1, false, false, false),
                 new PotionEffect(PotionEffectType.SPEED, 60, 1, false, false, true),
+                new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60, 1, false, false, true)
         };
         sequenceEffects.put(6, effects6);
 
@@ -71,6 +71,7 @@ public class SunSequence extends Sequence {
                 new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 2, false, false, false),
                 new PotionEffect(PotionEffectType.SPEED, 60, 2, false, false, true),
                 new PotionEffect(PotionEffectType.SATURATION, 60, 10, false, false, true),
+                new PotionEffect(PotionEffectType.FIRE_RESISTANCE, 60, 1, false, false, true)
         };
         sequenceEffects.put(2, effects2);
 
