@@ -35,10 +35,15 @@ public class  Reaping extends Ability implements Listener {
         new BukkitRunnable() {
             @Override
             public void run() {
-                Reaping = true;
-                return;
 
+                if(Reaping)
+                {
+                    p.sendMessage("Reaping is on");
+                    return;
+                }
+                Reaping = true;
             }
+
         }.runTaskTimer(Plugin.instance, 0, 0);
     }
     @EventHandler
@@ -55,11 +60,6 @@ public class  Reaping extends Ability implements Listener {
     @Override
     public void leftClick()
     {
-        if(Reaping)
-        {
-            p.sendMessage("Reaping is on");
-            return;
-        }
         Reaping = false;
         if(!Reaping)
         {

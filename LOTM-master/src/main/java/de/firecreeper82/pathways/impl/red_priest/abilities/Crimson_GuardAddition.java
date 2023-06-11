@@ -30,6 +30,8 @@ public class Crimson_GuardAddition extends Ability implements Listener {
         if (!pathway.getBeyonder().isBeyonder()) {
             return;
         }
+        p = pathway.getBeyonder().getPlayer();
+
         new BukkitRunnable() {
             @Override
             public void run() {

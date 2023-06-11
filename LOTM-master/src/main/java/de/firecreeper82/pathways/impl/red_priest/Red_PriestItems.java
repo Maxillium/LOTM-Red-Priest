@@ -98,6 +98,7 @@ public class Red_PriestItems extends Items {
         addAbility(new Crimson_GuardSubtraction(7,pathway,4,this));
         addAbility(new Steel(8,pathway,4,this));
         addAbility(new Fortify(9,pathway,4,this));
+        addAbility(new Amplification(10,pathway,3,this));
     }
 
 
