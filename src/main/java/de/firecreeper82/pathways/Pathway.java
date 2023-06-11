@@ -23,7 +23,10 @@ public abstract class Pathway {
 
     public static final String[] validNames = new String[]{
             "sun",
-            "fool"
+            "fool",
+            "red_priest",
+            "door",
+            "demoness"
     };
 
     public Items items;
@@ -116,6 +119,13 @@ public abstract class Pathway {
                 return pathwayObject;
             }
             case "demoness" -> {
+                pathwayObject = new DemonessPathway(uuid, sequence);
+                Beyonder beyonder = new Beyonder(uuid, pathwayObject);
+                Plugin.beyonders.put(uuid, beyonder);
+                Plugin.instance.getServer().getPluginManager().registerEvents(beyonder, Plugin.instance);
+                return pathwayObject;
+            }
+            case "red_priest" -> {
                 pathwayObject = new DemonessPathway(uuid, sequence);
                 Beyonder beyonder = new Beyonder(uuid, pathwayObject);
                 Plugin.beyonders.put(uuid, beyonder);

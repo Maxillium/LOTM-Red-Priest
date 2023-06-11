@@ -3,8 +3,12 @@ package de.firecreeper82.cmds;
 import de.firecreeper82.lotm.Plugin;
 import de.firecreeper82.pathways.Pathway;
 import de.firecreeper82.pathways.Potion;
+import de.firecreeper82.pathways.impl.demoness.DemonessPotions;
+import de.firecreeper82.pathways.impl.door.DoorPotions;
 import de.firecreeper82.pathways.impl.fool.FoolPotions;
+import de.firecreeper82.pathways.impl.red_priest.Red_PriestPotions;
 import de.firecreeper82.pathways.impl.sun.SunPotions;
+import org.bukkit.block.data.type.Door;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -46,6 +50,33 @@ public class PotionsCmd implements CommandExecutor {
             case "fool" -> {
                 for (Potion potion : Plugin.instance.getPotions()) {
                     if (potion instanceof FoolPotions) {
+                        for (int i = 1; i < 10; i++) {
+                            p.getInventory().addItem(potion.returnPotionForSequence(i));
+                        }
+                    }
+                }
+            }
+            case "door" -> {
+                for (Potion potion : Plugin.instance.getPotions()) {
+                    if (potion instanceof DoorPotions) {
+                        for (int i = 1; i < 10; i++) {
+                            p.getInventory().addItem(potion.returnPotionForSequence(i));
+                        }
+                    }
+                }
+            }
+            case "demoness" -> {
+                for (Potion potion : Plugin.instance.getPotions()) {
+                    if (potion instanceof DemonessPotions) {
+                        for (int i = 1; i < 10; i++) {
+                            p.getInventory().addItem(potion.returnPotionForSequence(i));
+                        }
+                    }
+                }
+            }
+            case "red_priest" -> {
+                for (Potion potion : Plugin.instance.getPotions()) {
+                    if (potion instanceof Red_PriestPotions) {
                         for (int i = 1; i < 10; i++) {
                             p.getInventory().addItem(potion.returnPotionForSequence(i));
                         }
