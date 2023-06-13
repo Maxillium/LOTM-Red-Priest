@@ -99,6 +99,7 @@ public class Red_PriestItems extends Items {
         addAbility(new Steel(8,pathway,4,this));
         addAbility(new Fortify(9,pathway,4,this));
         addAbility(new Amplification(10,pathway,3,this));
+        addAbility(new Weather_Manipulation(11,pathway,2,this));
     }
 
 

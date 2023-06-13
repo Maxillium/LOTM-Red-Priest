@@ -41,14 +41,14 @@ public class Crimson_GuardSubtraction extends Ability implements Listener {
     @EventHandler
     public void onInteract(PlayerInteractEntityEvent e, PlayerInteractEntityEvent d) {
         if (e.getPlayer().isOnline() && d.getPlayer() != null) {
-            if (Crimson_Guard.team.size() > 1) {
-                Crimson_Guard.team.remove(d.getPlayer(), d.getPlayer().getUniqueId());
+           // if (Crimson_Guard.team.size() > 1) {
+            //    Crimson_Guard.team.remove(d.getPlayer(), d.getPlayer().getUniqueId());
                 p.sendMessage("Team member removed");
             } else {
                 p.sendMessage("No team members added");
             }
         }
-    }
+   // }
 
     @Override
     public ItemStack getItem() {

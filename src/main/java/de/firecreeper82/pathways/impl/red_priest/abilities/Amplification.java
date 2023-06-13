@@ -29,33 +29,33 @@ public class Amplification extends Ability {
         pathway.getSequence().getUsesAbilities()[identifier - 1] = true;
 
 
-        new BukkitRunnable() {
+        //new BukkitRunnable() {
             int counter = 20;
-            @Override
-            public void run() {
+           // @Override
+            //public void run() {
                 if(pathway.getSequence().getUsesAbilities()[identifier - 1])
                 {
-                    for (Player i : teams.keySet()) {
-                        i.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 4, true, false));
+                  //  for (Player i : teams.keySet()) {
+                    //    i.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 60, 4, true, false));
                     }
 
                 }
-                counter--;
+               // counter--;
 
-                if(counter <= 0) {
-                    counter = 20;
-                    pathway.getSequence().removeSpirituality(1000 * Crimson_Guard.team.size());
-                }
-            }
+               // if(counter <= 0) {
+                   // counter = 20;
+                   // pathway.getSequence().removeSpirituality(1000 * Crimson_Guard.team.size());
+              // }//
+            //}//
 
-        }.runTaskTimer(Plugin.instance, 0, 0);
+       // }.runTaskTimer(Plugin.instance, 0, 0);//
 
-    }
-    @Override
-    public void leftClick()
-    {
-        pathway.getSequence().getUsesAbilities()[identifier - 1] = false;
-    }
+    //}//
+   // @Override
+   // public void leftClick()
+   // {
+   //     pathway.getSequence().getUsesAbilities()[identifier - 1] = false;
+    //}//
 
 
     @Override

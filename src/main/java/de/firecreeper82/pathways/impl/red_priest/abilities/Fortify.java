@@ -21,6 +21,7 @@ public class Fortify extends Ability {
         items.addToSequenceItems(identifier - 1, sequence);
 
     }
+
     @Override
     public void useAbility() {
         p = pathway.getBeyonder().getPlayer();
@@ -28,36 +29,37 @@ public class Fortify extends Ability {
         pathway.getSequence().getUsesAbilities()[identifier - 1] = true;
 
 
-        new BukkitRunnable() {
-            int counter = 20;
-            @Override
-            public void run() {
-                if(pathway.getSequence().getUsesAbilities()[identifier - 1] && Crimson_Guard.team != null)
-                {
-                    for (Player i : Crimson_Guard.team.keySet()) {
-                        i.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 3, true, false));
-                    }
+        // new BukkitRunnable() {
+        //   int counter = 20;
+        //  @Override
+        // public void run() {
+        //   if(pathway.getSequence().getUsesAbilities()[identifier - 1] && Crimson_Guard.team != null)
+        // {
+        // for (Player i : Crimson_Guard.team.keySet()) {
+        //    i.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 60, 3, true, false));
+        // }//
 
-                }
-                counter--;
+        //}
+        // counter--;
 
-                if(counter <= 0) {
-                        counter = 20;
-                        pathway.getSequence().removeSpirituality(1000 * Crimson_Guard.team.size());
-                    }
-                }
-        }.runTaskTimer(Plugin.instance, 0, 0);
+        //if(counter <= 0) {
+        //  counter = 20;
+        // pathway.getSequence().removeSpirituality(1000 * Crimson_Guard.team.size());
+        //}
+        //}
+        // }.runTaskTimer(Plugin.instance, 0, 0);
 
+        // }
+        // @Override
+        //public void leftClick()
+        //{
+        // pathway.getSequence().getUsesAbilities()[identifier - 1] = false;
+        // }
     }
-    @Override
-    public void leftClick()
-    {
-        pathway.getSequence().getUsesAbilities()[identifier - 1] = false;
+
+        @Override
+        public ItemStack getItem () {
+            return Red_PriestItems.createItem(Material.DIAMOND, "Fortify", "420/s", identifier, 4, Objects.requireNonNull(Bukkit.getPlayer(pathway.getUuid())).getName());
+        }
     }
 
-
-    @Override
-    public ItemStack getItem() {
-        return Red_PriestItems.createItem(Material.DIAMOND, "Fortify", "420/s", identifier, 4, Objects.requireNonNull(Bukkit.getPlayer(pathway.getUuid())).getName());
-    }
-}

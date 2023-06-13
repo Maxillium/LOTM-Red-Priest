@@ -42,12 +42,12 @@ public class Crimson_GuardAddition extends Ability implements Listener {
     {
         if(e.getPlayer().isOnline() && d.getPlayer() !=null)
         {
-            if(Crimson_Guard.team.size() <10)
+           // if(Crimson_Guard.team.size() <10)
             {
-                Crimson_Guard.team.put(d.getPlayer(),d.getPlayer().getUniqueId());
+               // Crimson_Guard.team.put(d.getPlayer(),d.getPlayer().getUniqueId());
                 p.sendMessage("Team member added");
             }
-            else
+           // else
             {
                 p.sendMessage("Maximum team members reached");
             }
