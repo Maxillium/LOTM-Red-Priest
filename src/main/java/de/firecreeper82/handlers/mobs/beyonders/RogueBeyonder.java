@@ -12,6 +12,7 @@ import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -37,6 +38,8 @@ public class RogueBeyonder implements Listener {
     private float attackTimer;
     private boolean initHealth;
 
+    private final double[] multiplier;
+
     private enum STATE {
         WANDER,
         ATTACK
@@ -56,6 +59,12 @@ public class RogueBeyonder implements Listener {
 
         initHealth = false;
         attackTimer = 0;
+
+        multiplier = new double[] {
+            0, 3.5, 3, 2.5, 1.9, 1.7, 1.6, 1.4, 1.3, 1
+        };
+
+        Plugin.instance.addRogueBeyonder(this);
 
         characteristicIndex = new String[][] {
                 {"sun", "fool", "door", "demoness"},
@@ -87,6 +96,8 @@ public class RogueBeyonder implements Listener {
         }.runTaskTimer(Plugin.instance, 0, 1);
     }
 
+    int counter = 0;
+
     private void run() {
         if (beyonder == null || !beyonder.isSpawned())
             return;
@@ -102,20 +113,30 @@ public class RogueBeyonder implements Listener {
             beyonder.getEntity().setCustomName(name);
         }
 
+        counter++;
+
+        if(counter >= 20 * 10) {
+            boolean nearbyPlayer = false;
+            for(Entity nearby : entity.getNearbyEntities(150, 100, 150)) {
+                if (nearby instanceof Player) {
+                    nearbyPlayer = true;
+                    break;
+                }
+            }
+            if(!nearbyPlayer)
+                remove();
+        }
+
         if(target != null) {
             if(!target.isValid())
                 target = null;
             else if(target.getWorld() != beyonder.getEntity().getWorld())
                 target = null;
 
-            else if(target.getLocation().distance(beyonder.getEntity().getLocation()) > 30)
+            else if(target.getLocation().distance(beyonder.getEntity().getLocation()) > 60)
                 target = null;
-        }
-
-
-
-        if(target != null) {
-            state = STATE.ATTACK;
+            else
+                state = STATE.ATTACK;
         }
         else {
             if(aggressive) {
@@ -166,7 +187,24 @@ public class RogueBeyonder implements Listener {
 
         attackTimer = (60 * 20f) / ((float) currentAbility.getSequence() * 5);
 
-        currentAbility.useNPCAbility(target.getLocation(), beyonder.getEntity(), 1);
+        currentAbility.useNPCAbility(target.getLocation(), entity, multiplier[sequence]);
+    }
+
+    @EventHandler
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
+        if(!beyonder.isSpawned())
+            return;
+
+        if(!(e.getDamager() instanceof LivingEntity))
+            return;
+
+        if(target != null)
+            return;
+
+        if(e.getEntity() != entity)
+            return;
+
+        target = e.getDamager();
     }
 
     private void wanderState() {
@@ -188,7 +226,19 @@ public class RogueBeyonder implements Listener {
 
         if (e.getEntity() == entity) {
             e.getEntity().getWorld().dropItem(e.getEntity().getLocation(), Plugin.instance.getCharacteristic().getCharacteristic(sequence, characteristicIndex[0][pathway], characteristicIndex[1][pathway]));
+            Plugin.instance.removeRogueBeyonder(this);
             beyonder.destroy();
         }
+    }
+
+    public void remove() {
+        final RogueBeyonder removeItem = this;
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Plugin.instance.removeRogueBeyonder(removeItem);
+            }
+        }.runTaskLater(Plugin.instance, 1);
+        beyonder.destroy();
     }
 }

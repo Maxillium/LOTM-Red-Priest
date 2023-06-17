@@ -1,7 +1,7 @@
 package de.firecreeper82.pathways.impl.demoness.abilities;
 
-import de.firecreeper82.pathways.Ability;
 import de.firecreeper82.pathways.Items;
+import de.firecreeper82.pathways.NPCAbility;
 import de.firecreeper82.pathways.Pathway;
 import de.firecreeper82.pathways.impl.demoness.DemonessItems;
 import de.firecreeper82.pathways.impl.disasters.Blizzard;
@@ -12,18 +12,34 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
-public class CalamityManipulation extends Ability {
+import java.util.Random;
+
+public class CalamityManipulation extends NPCAbility {
 
     private Category selectedCategory = Category.BLIZZARD;
     private final Category[] categories = Category.values();
     private int selected = 0;
 
-    public CalamityManipulation(int identifier, Pathway pathway, int sequence, Items items) {
+    public CalamityManipulation(int identifier, Pathway pathway, int sequence, Items items, boolean npc) {
         super(identifier, pathway, sequence, items);
-        items.addToSequenceItems(identifier - 1, sequence);
+        if(!npc)
+            items.addToSequenceItems(identifier - 1, sequence);
+    }
+
+    @Override
+    public void useNPCAbility(Location loc, Entity caster, double multiplier) {
+        if(!(caster instanceof LivingEntity livingEntity))
+            return;
+        switch((new Random().nextInt(3))) {
+            case 0 -> (new Blizzard(livingEntity)).spawnDisaster(livingEntity, loc);
+            case 1 -> (new Earthquake(livingEntity)).spawnDisaster(livingEntity, caster.getLocation());
+            case 2 -> (new Tornado(livingEntity)).spawnDisaster(livingEntity, loc);
+        }
     }
 
     enum Category {
