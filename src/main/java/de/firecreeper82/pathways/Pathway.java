@@ -5,6 +5,7 @@ import de.firecreeper82.lotm.Plugin;
 import de.firecreeper82.pathways.impl.demoness.DemonessPathway;
 import de.firecreeper82.pathways.impl.door.DoorPathway;
 import de.firecreeper82.pathways.impl.fool.FoolPathway;
+import de.firecreeper82.pathways.impl.red_priest.Red_PriestPathway;
 import de.firecreeper82.pathways.impl.sun.SunPathway;
 
 import java.util.Arrays;
@@ -126,7 +127,7 @@ public abstract class Pathway {
                 return pathwayObject;
             }
             case "red_priest" -> {
-                pathwayObject = new DemonessPathway(uuid, sequence);
+                pathwayObject = new Red_PriestPathway(uuid, sequence);
                 Beyonder beyonder = new Beyonder(uuid, pathwayObject);
                 Plugin.beyonders.put(uuid, beyonder);
                 Plugin.instance.getServer().getPluginManager().registerEvents(beyonder, Plugin.instance);
@@ -154,6 +155,9 @@ public abstract class Pathway {
             }
             case "demoness" -> {
                 return DemonessPathway.getNames();
+            }
+            case "red_priest" -> {
+                return Red_PriestPathway.getNames();
             }
             default -> {
                 return null;

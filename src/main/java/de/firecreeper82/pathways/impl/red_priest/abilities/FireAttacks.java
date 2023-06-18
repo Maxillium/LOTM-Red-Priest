@@ -95,7 +95,6 @@ public class FireAttacks extends Ability {
             if(loc.getBlock().getType().isSolid()) {
                 loc.getWorld().createExplosion(loc,2,false,true,p);
                 loc.clone().subtract(vector).getBlock().setType(Material.FIRE);
-                p.teleport(loc);
 
                 break;
             }

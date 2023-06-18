@@ -4,14 +4,18 @@ package de.firecreeper82.pathways.impl.red_priest;
 import de.firecreeper82.lotm.Plugin;
 import de.firecreeper82.pathways.Pathway;
 import de.firecreeper82.pathways.Sequence;
-import de.firecreeper82.pathways.impl.red_priest.abilities.Crimson_Guard.Crimson_Guard;
+import de.firecreeper82.pathways.impl.red_priest.abilities.Reaping;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -26,8 +30,6 @@ public class Red_PriestSequence extends Sequence implements Listener{
         init();
         Plugin.instance.getServer().getPluginManager().registerEvents(this, Plugin.instance);
     }
-    HashMap<Player, UUID> map = new HashMap<>();
-    public Crimson_Guard teams = new Crimson_Guard(map);
     @Override
     public List<Integer> getIds() {
         Integer[] ids = {2, 1};
@@ -56,57 +58,58 @@ public class Red_PriestSequence extends Sequence implements Listener{
     @EventHandler
     //Intended to give the ability to enchant items
     public void onInteract(PlayerInteractEvent e) {
-        if(e.getPlayer() != getPathway().getBeyonder().getPlayer() || e.getItem() == null || currentSequence > 8 || pathway.getBeyonder().getSpirituality() < 800 || !pathway.getBeyonder().isBeyonder())
+        if(e.getPlayer() != getPathway().getBeyonder().getPlayer() || e.getItem() == null || currentSequence > 8 || pathway.getBeyonder().getSpirituality() < 800 || !pathway.getBeyonder().isBeyonder() || Objects.requireNonNull(e.getItem().getItemMeta()).hasEnchants())
             return;
         if(e.getItem().getType() == Material.WOODEN_SWORD || e.getItem().getType() == Material.STONE_SWORD || e.getItem().getType() == Material.GOLDEN_SWORD || e.getItem().getType() == Material.DIAMOND_SWORD || e.getItem().getType() == Material.NETHERITE_SWORD) {
 
             new BukkitRunnable(){
-                final Pathway c = getPathway();
-                @Override
-                public void run() {
-                    final ItemMeta testEnchantMeta = e.getItem().getItemMeta();
-                    if(Objects.requireNonNull(e.getItem().getItemMeta()).hasEnchants())
-                    {
-                        return;
+                    final Pathway c = getPathway();
+                    @Override
+                    public void run() {
+                        final ItemMeta testEnchantMeta = e.getItem().getItemMeta();
+                        if(Objects.requireNonNull(e.getItem().getItemMeta()).hasEnchants())
+                        {
+                            return;
+                        }
+                        if (c.getSequence().getCurrentSequence() >=5) {
+                            Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.FIRE_ASPECT, 1, false);
+                            removeSpirituality(800);
+
+                        }
+                        if (c.getSequence().getCurrentSequence() == 4  ) {
+                            Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.FIRE_ASPECT, 2, false);
+                            Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.DURABILITY, 2, false);
+                            Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.DAMAGE_ALL, 2, false);
+                            removeSpirituality(1000);
+
+
+                        }
+                        if (c.getSequence().getCurrentSequence() ==3   ) {
+                            Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.FIRE_ASPECT, 2, false);
+                            Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.DURABILITY, 3, false);
+                            Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.DAMAGE_ALL, 3, false);
+                            removeSpirituality(2000);
+
+
+                        }
+                        if (c.getSequence().getCurrentSequence() <= 2  ) {
+                            Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.FIRE_ASPECT, 2, false);
+                            Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.DURABILITY, 3, false);
+                            Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.DAMAGE_ALL, 4, false);
+                            Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.LOOT_BONUS_MOBS, 1, false);
+                            Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.LUCK, 2, false);
+                            removeSpirituality(3000);
+
+
+                        }
+                        e.getItem().setItemMeta(testEnchantMeta);
+                        cancel();
                     }
-                    if (c.getSequence().getCurrentSequence() >=5) {
-                        Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.FIRE_ASPECT, 1, false);
-                        removeSpirituality(800);
-
-                    }
-                    if (c.getSequence().getCurrentSequence() == 4  ) {
-                        Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.FIRE_ASPECT, 2, false);
-                        Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.DURABILITY, 2, false);
-                        Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.DAMAGE_ALL, 2, false);
-                        removeSpirituality(1000);
-
-
-                    }
-                    if (c.getSequence().getCurrentSequence() ==3   ) {
-                        Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.FIRE_ASPECT, 2, false);
-                        Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.DURABILITY, 3, false);
-                        Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.DAMAGE_ALL, 3, false);
-                        removeSpirituality(2000);
-
-
-                    }
-                    if (c.getSequence().getCurrentSequence() <= 2  ) {
-                        Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.FIRE_ASPECT, 2, false);
-                        Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.DURABILITY, 3, false);
-                        Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.DAMAGE_ALL, 4, false);
-                        Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.LOOT_BONUS_MOBS, 1, false);
-                        Objects.requireNonNull(testEnchantMeta).addEnchant(Enchantment.LUCK, 2, false);
-                        removeSpirituality(3000);
-
-
-                    }
-                    e.getItem().setItemMeta(testEnchantMeta);
-                    cancel();
-                }
 
             }.runTaskTimer(Plugin.instance, 0, 1);
         }
     }
+
     //Remove fire related damage
     @EventHandler
    public void onDamage(EntityDamageEvent e) {
@@ -124,6 +127,29 @@ public class Red_PriestSequence extends Sequence implements Listener{
             }
 
 
+        }
+    }
+    @EventHandler
+    public void EntityDamageByEntityEvent(EntityDamageByEntityEvent e) {
+        Entity p = e.getDamager();
+        if (p instanceof Player) {
+            ItemStack handItem = Objects.requireNonNull(((Player) p).getPlayer()).getInventory().getItemInMainHand();
+            if (Reaping.reaping) {
+                if (handItem.getType() == Material.STONE_SWORD) {
+                    new BukkitRunnable() {
+
+                        @Override
+                        public void run() {
+                            e.getEntity().getWorld().createExplosion(e.getEntity().getLocation(), 1, true, true);
+                            pathway.getSequence().removeSpirituality(300);
+                            cancel();
+                        }
+
+                    }.runTaskTimer(Plugin.instance, 0, 1);
+
+                }
+
+            }
         }
     }
 

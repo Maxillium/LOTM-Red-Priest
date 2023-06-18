@@ -57,6 +57,7 @@ public class Blizzard extends Disaster {
                     if (!(entity instanceof LivingEntity livingEntity) || entity == e || entity.getType() == EntityType.ARMOR_STAND)
                         continue;
 
+
                     livingEntity.setFreezeTicks(20 * 60);
                 }
 
@@ -68,6 +69,7 @@ public class Blizzard extends Disaster {
                     int temp = random.nextInt(blocks.size());
                     if (blocks.get(temp).getLocation().clone().add(0, 1, 0).getBlock().getType().isSolid())
                         continue;
+
                     blocks.get(temp).getLocation().clone().add(0, 1, 0).getBlock().setType(Material.SNOW);
                 }
             }
