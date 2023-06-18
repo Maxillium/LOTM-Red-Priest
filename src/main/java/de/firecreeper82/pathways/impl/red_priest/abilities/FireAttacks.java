@@ -29,6 +29,7 @@ public class FireAttacks extends Ability {
     private Category selectedCategory = Category.Fireball;
     private final Category[] categories = Category.values();
     private int selected = 0;
+    private boolean teleport;
     public FireAttacks(int identifier, Pathway pathway, int sequence, Items items) {
         super(identifier, pathway, sequence, items);
         items.addToSequenceItems(identifier - 1, sequence);
@@ -53,7 +54,9 @@ public class FireAttacks extends Ability {
     enum Category {
         Fireball("Summon flames"),
         FireSpear("Summon a flaming spear"),
-        Self_Explode("Create an explosion around yourself");
+        Self_Explode("Create an explosion around yourself"),
+        Teleport_On("Enables Teleporting"),
+        Teleport_Off("Disables Teleporting");
 
 
 
@@ -73,6 +76,10 @@ public class FireAttacks extends Ability {
             firespear();
         if(selectedCategory == Category.Self_Explode)
             self_explode();
+        if(selectedCategory == Category.Teleport_On)
+            teleport_On();
+        if(selectedCategory == Category.Teleport_Off)
+            teleport_Off();
 
     }
 
@@ -204,8 +211,9 @@ public class FireAttacks extends Ability {
                         livingEntity.damage(8, p);
                         livingEntity.setFireTicks(20 * 6);
                     }
-
-                    p.teleport(fireLoc);
+                    if(teleport) {
+                        p.teleport(fireLoc);
+                    }
 
 
                     cancel();
@@ -290,6 +298,14 @@ public class FireAttacks extends Ability {
         Location loc = p.getLocation();
         p.getWorld().createExplosion(loc, 2,true,true,p);
 
+    }
+    private void teleport_On()
+    {
+        teleport = true;
+    }
+    private void teleport_Off()
+    {
+        teleport = false;
     }
 
 

@@ -135,7 +135,7 @@ public class Red_PriestSequence extends Sequence implements Listener{
         if (p instanceof Player) {
             ItemStack handItem = Objects.requireNonNull(((Player) p).getPlayer()).getInventory().getItemInMainHand();
             if (Reaping.reaping) {
-                if (handItem.getType() == Material.STONE_SWORD) {
+                if (handItem.getType() == Material.AIR || handItem == null) {
                     new BukkitRunnable() {
 
                         @Override
