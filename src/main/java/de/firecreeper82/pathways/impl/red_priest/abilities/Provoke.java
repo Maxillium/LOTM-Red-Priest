@@ -11,6 +11,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -36,7 +37,6 @@ public class Provoke extends Ability {
         provocations[0] = "§4Keep rolling your eyes, you may eventually find a brain";
         provocations[1] = "§4Ah, perfect time! I was going to take out the trash";
         provocations[2] = "§4Careful there, wouldn't want to hurt what little pride you have left";
-        pathway.getSequence().getUsesAbilities()[identifier - 1] = true;
         final int random = (int) (Math.random() * 3);
         new BukkitRunnable() {
             @Override
@@ -45,8 +45,8 @@ public class Provoke extends Ability {
                     if (random == 0) {
 
                         if (entity instanceof LivingEntity) {
-                            if(entity == getP() && entity !=p) {
-                                p.sendMessage(provocations[random]);
+                            if(entity instanceof Player && entity !=p) {
+                                entity.sendMessage(provocations[random]);
                             }
                             if(entity == getP() && entity !=p) {
                                 ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 2, 1, true, true));
@@ -56,8 +56,8 @@ public class Provoke extends Ability {
 
                     else if (random == 1) {
                         if (entity instanceof LivingEntity) {
-                            if(entity == getP() && entity !=p) {
-                                p.sendMessage(provocations[random]);
+                            if(entity instanceof Player && entity !=p) {
+                                entity.sendMessage(provocations[random]);
                             }
                             if(entity == getP() && entity !=p) {
                                 ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2, 1, true, true));
@@ -66,8 +66,8 @@ public class Provoke extends Ability {
                     }
                     else if (random == 2) {
                         if (entity instanceof LivingEntity) {
-                            if(entity == getP() && entity !=p) {
-                                p.sendMessage(provocations[random]);
+                            if(entity instanceof Player && entity !=p) {
+                                entity.sendMessage(provocations[random]);
                             }
                             if(entity == getP() && entity !=p) {
                                 ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 2, 1, true, true));

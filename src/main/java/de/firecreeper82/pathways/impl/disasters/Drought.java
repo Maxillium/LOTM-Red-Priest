@@ -72,7 +72,7 @@ public class Drought extends Disaster {
                     if (blocks.get(temp).getLocation().clone().add(0, 0, 0).getBlock().getType() == Material.WATER || blocks.get(temp).getLocation().clone().add(0, 0, 0).getBlock().getType() == Material.LEGACY_STATIONARY_WATER)
                         continue;
 
-                    blocks.get(temp).getLocation().clone().add(0, 0, 0).getBlock().setType(Material.AIR);
+                    blocks.get(temp).setType(Material.AIR);
                 }
             }
         }.runTaskTimer(Plugin.instance, 0, 2);

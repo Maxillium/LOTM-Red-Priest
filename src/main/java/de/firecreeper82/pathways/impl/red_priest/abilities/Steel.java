@@ -34,7 +34,7 @@ public class Steel extends Ability {
             @Override
             public void run () {
                 p.getWorld().spawnParticle(Particle.ASH, p.getEyeLocation(), 50, 1.1, 1.1, 1.1, 0);
-                p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION,2,3,true,false,true));
+                p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION,2,2,true,false,false));
                 drain++;
                 if(drain >= 20) {
                     drain = 0;

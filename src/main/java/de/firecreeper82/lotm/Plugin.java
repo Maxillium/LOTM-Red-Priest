@@ -13,6 +13,7 @@ import de.firecreeper82.pathways.impl.demoness.DemonessPotions;
 import de.firecreeper82.pathways.impl.door.DoorPotions;
 import de.firecreeper82.pathways.impl.fool.FoolPotions;
 import de.firecreeper82.pathways.impl.fool.abilities.FogOfHistory;
+import de.firecreeper82.pathways.impl.red_priest.Red_PriestPotions;
 import de.firecreeper82.pathways.impl.sun.SunPotions;
 import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
@@ -155,6 +156,7 @@ public final class Plugin extends JavaPlugin {
         potions.add(new FoolPotions());
         potions.add(new DoorPotions());
         potions.add(new DemonessPotions());
+        potions.add(new Red_PriestPotions());
     }
 
     private void loadNames() throws InterruptedException {

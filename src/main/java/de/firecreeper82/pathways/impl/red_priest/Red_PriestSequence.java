@@ -135,18 +135,20 @@ public class Red_PriestSequence extends Sequence implements Listener{
         if (p instanceof Player) {
             ItemStack handItem = Objects.requireNonNull(((Player) p).getPlayer()).getInventory().getItemInMainHand();
             if (Reaping.reaping) {
-                if (handItem.getType() == Material.AIR || handItem == null) {
-                    new BukkitRunnable() {
+                if(e.getCause() == EntityDamageEvent.DamageCause.CONTACT || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK ) {
+                    if (handItem.getType() == Material.AIR || handItem == null) {
+                        new BukkitRunnable() {
 
-                        @Override
-                        public void run() {
-                            e.getEntity().getWorld().createExplosion(e.getEntity().getLocation(), 1, true, true);
-                            pathway.getSequence().removeSpirituality(300);
-                            cancel();
-                        }
+                            @Override
+                            public void run() {
+                                e.getEntity().getWorld().createExplosion(e.getEntity().getLocation(), 1, true, true);
+                                pathway.getSequence().removeSpirituality(300);
+                                cancel();
+                            }
 
-                    }.runTaskTimer(Plugin.instance, 0, 1);
+                        }.runTaskTimer(Plugin.instance, 0, 1);
 
+                    }
                 }
 
             }
