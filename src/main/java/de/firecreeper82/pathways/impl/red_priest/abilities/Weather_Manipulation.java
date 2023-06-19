@@ -6,7 +6,6 @@ import de.firecreeper82.pathways.Pathway;
 import de.firecreeper82.pathways.impl.red_priest.Red_PriestItems;
 import de.firecreeper82.pathways.impl.disasters.Blizzard;
 import de.firecreeper82.pathways.impl.disasters.Tornado;
-import de.firecreeper82.pathways.impl.disasters.Tsunami;
 import de.firecreeper82.pathways.impl.disasters.Drought;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -29,7 +28,6 @@ public class Weather_Manipulation extends Ability {
     enum Category {
         TORNADO("§fTornado"),
         BLIZZARD("§bBlizzard"),
-        TSUNAMI("§9Tsunami"),
         DROUGHT("§2Drought");
 
         private final String name;
@@ -57,7 +55,6 @@ public class Weather_Manipulation extends Ability {
         switch (selectedCategory) {
             case TORNADO -> new Tornado(p).spawnDisaster(p, loc);
             case BLIZZARD -> new Blizzard(p).spawnDisaster(p, loc);
-            case TSUNAMI -> new Tsunami(p).spawnDisaster(p, loc);
             case DROUGHT -> new Drought(p).spawnDisaster(p, loc);
         }
     }

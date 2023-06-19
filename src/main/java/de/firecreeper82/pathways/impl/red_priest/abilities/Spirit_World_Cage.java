@@ -1,14 +1,17 @@
 package de.firecreeper82.pathways.impl.red_priest.abilities;
 
+import de.firecreeper82.lotm.Beyonder;
 import de.firecreeper82.lotm.Plugin;
 import de.firecreeper82.lotm.util.VectorUtils;
 import de.firecreeper82.pathways.Ability;
 import de.firecreeper82.pathways.Items;
 import de.firecreeper82.pathways.NPCAbility;
 import de.firecreeper82.pathways.Pathway;
+import de.firecreeper82.pathways.impl.door.DoorPathway;
 import de.firecreeper82.pathways.impl.red_priest.Red_PriestItems;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +19,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
 
 public class Spirit_World_Cage extends NPCAbility {
@@ -66,11 +68,6 @@ public class Spirit_World_Cage extends NPCAbility {
 
         Location loc = p.getLocation().clone();
 
-        Random random = new Random();
-
-        Location doorLoc = loc.clone();
-        doorLoc.setPitch(0);
-        doorLoc.setYaw(random.nextInt(4) * 90);
 
         concealedEntities = new ArrayList<>(p.getNearbyEntities(radiusAdjust, radiusAdjust, radiusAdjust));
         concealedEntities.add(p);
@@ -97,7 +94,6 @@ public class Spirit_World_Cage extends NPCAbility {
                                 for (Player player : Bukkit.getOnlinePlayers()) {
                                     if (entity instanceof Player concealedPlayer)
                                         player.showPlayer(Plugin.instance, concealedPlayer);
-
                                 }
                             }
                         }
@@ -113,17 +109,23 @@ public class Spirit_World_Cage extends NPCAbility {
                     if (entity instanceof Player concealedPlayer) {
                         for (Player player : Bukkit.getOnlinePlayers()) {
                             player.hidePlayer(Plugin.instance, concealedPlayer);
-                            if (entity instanceof Player) {
-                                if(((Player) entity).getGameMode() == GameMode.SPECTATOR) //&& !entity.isOp())
-                                {
-                                    ((Player) entity).setGameMode(GameMode.SURVIVAL);
-                                }
+                            if(((Player) entity).getGameMode() == GameMode.SPECTATOR)
+                            {
+                                ((Player) entity).setGameMode(GameMode.SURVIVAL);
                             }
+                            //if(entity instanceof Beyonder)
+                           // {
+                             //   if (entity instanceof Door && ((Beyonder) entity).getPathway().getSequence()  < pathway.getSequence())
+                             //   {
+                             //       entity.g
+                             //   }
+                           // }
                         }
                     }
                 }
 
                 drawSquare(loc, Material.BARRIER, radius, p, false);
+
 
 
                 if (!pathway.getSequence().getUsesAbilities()[identifier - 1]) {
@@ -150,7 +152,6 @@ public class Spirit_World_Cage extends NPCAbility {
 
         p.sendMessage("§5Set the radius to " + radiusAdjust);
     }
-
 
 
     @SuppressWarnings("all")
