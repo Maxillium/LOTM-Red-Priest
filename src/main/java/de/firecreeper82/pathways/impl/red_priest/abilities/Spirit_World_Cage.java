@@ -1,22 +1,27 @@
 package de.firecreeper82.pathways.impl.red_priest.abilities;
 
 
+import de.firecreeper82.lotm.Beyonder;
 import de.firecreeper82.lotm.Plugin;
 
 import de.firecreeper82.pathways.Items;
 import de.firecreeper82.pathways.NPCAbility;
 import de.firecreeper82.pathways.Pathway;
 
+import de.firecreeper82.pathways.impl.door.DoorItems;
+import de.firecreeper82.pathways.impl.door.DoorPathway;
 import de.firecreeper82.pathways.impl.red_priest.Red_PriestItems;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 public class Spirit_World_Cage extends NPCAbility {
@@ -111,13 +116,17 @@ public class Spirit_World_Cage extends NPCAbility {
                             {
                                 ((Player) entity).setGameMode(GameMode.SURVIVAL);
                             }
-                            //if(entity instanceof Beyonder)
-                           // {
-                             //   if (entity instanceof Door && ((Beyonder) entity).getPathway().getSequence()  < pathway.getSequence())
-                             //   {
-                             //       entity.g
-                             //   }
-                           // }
+                            if(entity instanceof Beyonder)
+                           {
+                               if (((Beyonder)  entity).getPathway().getName().equals("door")  && ((Beyonder) entity).getPathway().getSequence().getCurrentSequence() +1 < pathway.getSequence().getCurrentSequence())
+                               {
+                                    entity.setFreezeTicks(80);
+                                    if(((Player) entity).getInventory().getItemInMainHand().getItemMeta() instanceof DoorItems)
+                                    {
+                                        Objects.requireNonNull(((Player) entity).getPlayer()).getInventory().getItemInMainHand().setType(Material.AIR);
+                                    }
+                                }
+                            }
                         }
                     }
                 }
