@@ -94,11 +94,7 @@ public class Red_PriestItems extends Items {
         addAbility(new FireAttacks(3,pathway,7,this));
         addAbility(new Reaping(4,pathway,5,this));
         addAbility(new Flame_transform(5,pathway,4,this));
-        addAbility(new Crimson_GuardAddition(6,pathway,4,this));
-        addAbility(new Crimson_GuardSubtraction(7,pathway,4,this));
         addAbility(new Steel(8,pathway,4,this));
-        addAbility(new Fortify(9,pathway,4,this));
-        addAbility(new Amplification(10,pathway,3,this));
         addAbility(new Spirit_World_Cage(11,pathway,2,this,false));
         addAbility(new Weather_Manipulation(12,pathway,2,this));
     }

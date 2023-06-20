@@ -302,10 +302,12 @@ public class FireAttacks extends Ability {
     private void teleport_On()
     {
         teleport = true;
+        p.sendMessage("Teleporting is on");
     }
     private void teleport_Off()
     {
         teleport = false;
+        p.sendMessage("Teleporting is off");
     }
 
 

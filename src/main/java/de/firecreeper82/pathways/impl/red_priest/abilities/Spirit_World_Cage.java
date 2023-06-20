@@ -1,22 +1,20 @@
 package de.firecreeper82.pathways.impl.red_priest.abilities;
 
-import de.firecreeper82.lotm.Beyonder;
+
 import de.firecreeper82.lotm.Plugin;
-import de.firecreeper82.lotm.util.VectorUtils;
-import de.firecreeper82.pathways.Ability;
+
 import de.firecreeper82.pathways.Items;
 import de.firecreeper82.pathways.NPCAbility;
 import de.firecreeper82.pathways.Pathway;
-import de.firecreeper82.pathways.impl.door.DoorPathway;
+
 import de.firecreeper82.pathways.impl.red_priest.Red_PriestItems;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.block.data.type.Door;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
+
 
 import java.util.ArrayList;
 import java.util.Random;

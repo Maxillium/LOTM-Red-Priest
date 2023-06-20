@@ -48,8 +48,12 @@ public class Provoke extends Ability {
                             if(entity instanceof Player && entity !=p) {
                                 entity.sendMessage(provocations[random]);
                             }
-                            if(entity == getP() && entity !=p) {
-                                ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 2, 1, true, true));
+                            if(entity instanceof Player && entity !=p) {
+                                ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 10, 1, true, true));
+                                if(((Player) entity).hasPotionEffect(PotionEffectType.WITHER) && pathway.getSequence().getCurrentSequence() >= 4)
+                                {
+                                    ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, 10, 2, true, true));
+                                }
                             }
                         }
                     }
@@ -59,8 +63,12 @@ public class Provoke extends Ability {
                             if(entity instanceof Player && entity !=p) {
                                 entity.sendMessage(provocations[random]);
                             }
-                            if(entity == getP() && entity !=p) {
-                                ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 2, 1, true, true));
+                            if(entity instanceof Player && entity !=p) {
+                                ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 10, 1, true, true));
+                                if(((Player) entity).hasPotionEffect(PotionEffectType.WEAKNESS) && pathway.getSequence().getCurrentSequence() >= 4 )
+                                {
+                                    ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 10, 2, true, true));
+                                }
                             }
                         }
                     }
@@ -69,8 +77,12 @@ public class Provoke extends Ability {
                             if(entity instanceof Player && entity !=p) {
                                 entity.sendMessage(provocations[random]);
                             }
-                            if(entity == getP() && entity !=p) {
-                                ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 2, 1, true, true));
+                            if(entity instanceof Player && entity !=p) {
+                                ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 5, 1, true, true));
+                                if(((Player) entity).hasPotionEffect(PotionEffectType.SLOW) && pathway.getSequence().getCurrentSequence() >= 4 )
+                                {
+                                    ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 5, 2, true, true));
+                                }
                             }
                         }
                     }
@@ -82,7 +94,7 @@ public class Provoke extends Ability {
 
     @Override
     public ItemStack getItem() {
-        return Red_PriestItems.createItem(Material.RED_DYE, "Provoke", "60", identifier, 8, Objects.requireNonNull(Bukkit.getPlayer(pathway.getUuid())).getName());
+        return Red_PriestItems.createItem(Material.RED_DYE, "Provoke", "40", identifier, 8, Objects.requireNonNull(Bukkit.getPlayer(pathway.getUuid())).getName());
     }
 }
 
