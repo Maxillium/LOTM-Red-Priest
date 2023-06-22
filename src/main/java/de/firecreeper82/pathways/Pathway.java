@@ -5,6 +5,7 @@ import de.firecreeper82.lotm.Plugin;
 import de.firecreeper82.pathways.impl.demoness.DemonessPathway;
 import de.firecreeper82.pathways.impl.door.DoorPathway;
 import de.firecreeper82.pathways.impl.fool.FoolPathway;
+import de.firecreeper82.pathways.impl.red_priest.Red_PriestPathway;
 import de.firecreeper82.pathways.impl.sun.SunPathway;
 import de.firecreeper82.pathways.impl.tyrant.TyrantPathway;
 
@@ -100,6 +101,7 @@ public abstract class Pathway {
             case "door" -> pathwayObject = new DoorPathway(uuid, sequence);
             case "demoness" -> pathwayObject = new DemonessPathway(uuid, sequence);
             case "tyrant" -> pathwayObject = new TyrantPathway(uuid, sequence);
+            case "red_priest" -> pathwayObject = new Red_PriestPathway(uuid, sequence);
             default -> {
                 return null;
             }
@@ -131,6 +133,9 @@ public abstract class Pathway {
             }
             case "tyrant" -> {
                 return TyrantPathway.getNames();
+            }
+            case "red_priest" -> {
+                return Red_PriestPathway.getNames();
             }
             default -> {
                 return null;
