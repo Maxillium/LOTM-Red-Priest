@@ -1,10 +1,15 @@
 package de.firecreeper82.lotm.util;
 
 import jline.internal.Nullable;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -66,6 +71,34 @@ public class Util {
             }
         }
     }
+    public static void drawParticleSphere(Location loc, double sphereRadius, int detail, @Nullable Particle.DustOptions dust, @Nullable Material material, double offset, Particle particle) {
+        //Spawn particles
+        for (double i = 0; i <= Math.PI; i += Math.PI / detail) {
+            double radius = Math.sin(i) * sphereRadius;
+            double y = Math.cos(i) * sphereRadius;
+            for (double a = 0; a < Math.PI * 2; a += Math.PI / detail) {
+                double x = Math.cos(a) * radius;
+                double z = Math.sin(a) * radius;
+                loc.add(x, y, z);
+                if (loc.getWorld() == null)
+                    return;
+
+                for(Player player : Bukkit.getOnlinePlayers()) {
+                    if(player.getWorld() != loc.getWorld() || player.getLocation().distance(loc) > 80)
+                        continue;
+                    if(dust != null)
+                        player.spawnParticle(Particle.REDSTONE, loc, 1, offset, offset, offset, 0, dust);
+                    else
+                        player.spawnParticle(particle, loc, 1, offset, offset, offset, 0);
+                }
+                if (material != null && (loc.getBlock().getType().getHardness() >= 0 || loc.getBlock().getType() == Material.BARRIER) && (!loc.getBlock().getType().isSolid() || loc.getBlock().getType() == Material.BARRIER)) {
+                    loc.getBlock().setType(material);
+                }
+                loc.subtract(x, y, z);
+            }
+        }
+    }
+
 
     @SuppressWarnings("unused")
     public static ArrayList<Block> getBlocksInCircleRadius(Block start, int radius, boolean ignoreAir) {
@@ -86,6 +119,16 @@ public class Util {
             }
         }
         return blocks;
+    }
+
+    public static boolean testForValidEntity(Entity entity, Entity caster, boolean noArmorStand, boolean noCaster) {
+        if(!(entity instanceof LivingEntity))
+            return false;
+
+        if(noArmorStand && entity.getType() == EntityType.ARMOR_STAND)
+            return false;
+
+        return !noCaster || entity != caster;
     }
 
     public static ArrayList<Block> getNearbyBlocksInSphere(Location location, int radius, boolean empty, boolean ignoreAir, boolean smoothEdges) {
@@ -115,6 +158,22 @@ public class Util {
         }
 
         return blocks;
+    }
+
+    public static void drawParticlesForNearbyPlayers(Particle particle, Location loc, int count, double offsetX, double offsetY, double offsetZ, double speed) {
+        for(Player p : Bukkit.getOnlinePlayers()) {
+            if(p.getWorld() != loc.getWorld() || p.getLocation().distance(loc) > 100)
+                continue;
+            p.spawnParticle(particle, loc, count, offsetX, offsetY, offsetZ, speed);
+        }
+    }
+
+    public static void drawDustsForNearbyPlayers(Location loc, int count, double offsetX, double offsetY, double offsetZ, Particle.DustOptions dust) {
+        for(Player p : Bukkit.getOnlinePlayers()) {
+            if(p.getWorld() != loc.getWorld() || p.getLocation().distance(loc) > 100)
+                continue;
+            p.spawnParticle(Particle.REDSTONE, loc, count, offsetX, offsetY, offsetZ, dust);
+        }
     }
 
     public static ArrayList<Block> getBlocksInSquare(Block start, int radius, boolean ignoreAir) {
