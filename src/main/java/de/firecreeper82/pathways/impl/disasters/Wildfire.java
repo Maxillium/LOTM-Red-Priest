@@ -10,15 +10,14 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Drought extends Disaster {
-    public Drought(LivingEntity e) {
+public class Wildfire extends Disaster {
+    public Wildfire(LivingEntity e) {
         super(e);
     }
 
@@ -47,15 +46,15 @@ public class Drought extends Disaster {
                 }
 
                 if (counter % 10 == 0) {
-                    for (Entity entity : world.getNearbyEntities(startLoc, 80, 80, 80)) {
+                    for (Entity entity : world.getNearbyEntities(startLoc, 20, 20, 20)) {
                         if (!(entity instanceof LivingEntity livingEntity) || entity == e || entity.getType() == EntityType.ARMOR_STAND)
                             continue;
 
-                        livingEntity.damage(15, e);
+                        livingEntity.damage(5, e);
                     }
                 }
 
-                for (Entity entity : world.getNearbyEntities(startLoc, 40, 40, 40)) {
+                for (Entity entity : world.getNearbyEntities(startLoc, 20, 20, 20)) {
                     if (!(entity instanceof LivingEntity livingEntity) || entity == e || entity.getType() == EntityType.ARMOR_STAND)
                         continue;
 
@@ -69,13 +68,12 @@ public class Drought extends Disaster {
                 }
                 for (int i = 0; i < 80; i++) {
                     int temp = random.nextInt(blocks.size());
-                    if (blocks.get(temp).getLocation().clone().add(0, 0, 0).getBlock().getType() == Material.WATER || blocks.get(temp).getLocation().clone().add(0, 0, 0).getBlock().getType() == Material.LEGACY_STATIONARY_WATER)
-                        continue;
-
-                    blocks.get(temp).setType(Material.AIR);
+                    if (blocks.get(temp).getLocation().clone().add(0,1,0).getBlock().getType() == Material.GRASS)
+                        blocks.get(temp).getLocation().clone().add(0,1,0).getBlock().setType(Material.FIRE);
                 }
+
             }
-        }.runTaskTimer(Plugin.instance, 0, 2);
+        }.runTaskTimer(Plugin.instance, 0, 5);
     }
 
     @Override

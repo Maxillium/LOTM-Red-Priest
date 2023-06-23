@@ -118,7 +118,7 @@ public class Spirit_World_Cage extends NPCAbility {
                             }
                             if(entity instanceof Beyonder)
                            {
-                               if (((Beyonder)  entity).getPathway().getName().equals("door")  && ((Beyonder) entity).getPathway().getSequence().getCurrentSequence() +1 < pathway.getSequence().getCurrentSequence())
+                               if (((Beyonder)  entity).getPathway().getName().equals("door")  && ((Beyonder) entity).getPathway().getSequence().getCurrentSequence() -1 >= pathway.getSequence().getCurrentSequence())
                                {
                                     entity.setFreezeTicks(80);
                                     if(((Player) entity).getInventory().getItemInMainHand().getItemMeta() instanceof DoorItems)

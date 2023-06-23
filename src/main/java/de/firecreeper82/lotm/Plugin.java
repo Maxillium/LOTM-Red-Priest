@@ -13,6 +13,7 @@ import de.firecreeper82.pathways.impl.demoness.DemonessPotions;
 import de.firecreeper82.pathways.impl.door.DoorPotions;
 import de.firecreeper82.pathways.impl.fool.FoolPotions;
 import de.firecreeper82.pathways.impl.fool.abilities.FogOfHistory;
+import de.firecreeper82.pathways.impl.red_priest.Red_PriestPotions;
 import de.firecreeper82.pathways.impl.sun.SunPotions;
 import de.firecreeper82.pathways.impl.tyrant.TyrantPotions;
 import net.citizensnpcs.api.CitizensAPI;
@@ -172,6 +173,7 @@ public final class Plugin extends JavaPlugin {
         potions.add(new DoorPotions());
         potions.add(new DemonessPotions());
         potions.add(new TyrantPotions());
+        potions.add(new Red_PriestPotions());
     }
 
     private void loadNames() throws InterruptedException {

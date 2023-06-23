@@ -61,7 +61,7 @@ public class Tracking extends Ability {
                 }
 
             }
-        }.runTaskTimer(Plugin.instance, 0, 1);
+        }.runTaskTimer(Plugin.instance, 0, 0);
         pathway.getSequence().getUsesAbilities()[identifier - 1] = true;
     }
     @Override

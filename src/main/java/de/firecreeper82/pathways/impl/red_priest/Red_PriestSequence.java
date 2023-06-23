@@ -6,11 +6,15 @@ import de.firecreeper82.pathways.Pathway;
 import de.firecreeper82.pathways.Sequence;
 import de.firecreeper82.pathways.impl.red_priest.abilities.Reaping;
 import fr.mrmicky.fastboard.FastBoard;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.item.alchemy.Potion;
 import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,6 +25,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -41,7 +46,7 @@ public class Red_PriestSequence extends Sequence implements Listener{
     }
     @Override
     public List<Integer> getIds() {
-        Integer[] ids = {2, 1,7};
+        Integer[] ids = {2, 1,7,8};
         return Arrays.asList(ids);
     }
 
@@ -117,6 +122,34 @@ public class Red_PriestSequence extends Sequence implements Listener{
 
             }.runTaskTimer(Plugin.instance, 0, 1);
         }
+        if(e.getItem().getType() == Material.SPIDER_EYE ) {
+
+            new BukkitRunnable(){
+                final Pathway c = getPathway();
+                @Override
+                public void run() {
+                    Player p = e.getPlayer();
+                    ItemStack removeItem = e.getItem();
+                    ItemStack item = new ItemStack(Material.SPLASH_POTION);
+                    PotionMeta meta = ((PotionMeta) item.getItemMeta());
+                    assert meta != null;
+                    meta.setColor(Color.GREEN);
+                    meta.addCustomEffect(new PotionEffect(PotionEffectType.POISON, 120, 1), true);
+                    item.setItemMeta(meta);
+
+
+
+                    p.getInventory().remove(removeItem);
+                    removeItem.setAmount(removeItem.getAmount() - 1);
+                    p.getInventory().setItem(p.getInventory().getHeldItemSlot(), removeItem);
+                    p.getInventory().setItem(p.getInventory().getHeldItemSlot(),item);
+                    removeSpirituality(80);
+                    cancel();
+
+                }
+
+            }.runTaskTimer(Plugin.instance, 0, 1);
+        }
     }
 
     //Remove fire related damage
@@ -166,68 +199,6 @@ public class Red_PriestSequence extends Sequence implements Listener{
 
 
 
-
-    public void Remove(Player p) {
-        team1.remove(p);
-    }
-
-    public void Add(Player p) {
-        team1.add(p);
-    }
-    @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
-        //if (!e.getPlayer().getUniqueId().equals(uuid))
-          //  return;
-        if (!pathway.getBeyonder().isBeyonder())
-            return;
-        start();
-    }
-
-
-    //Gets called everytime the Player rejoins
-    public void start() {
-        //Team
-        ScoreboardManager manager = Bukkit.getScoreboardManager();
-        assert manager != null;
-        Scoreboard scoreboard = manager.getNewScoreboard();
-        Team team = scoreboard.registerNewTeam("Crimson Vanguard");
-
-        team.addEntry(pathway.getBeyonder().getPlayer().getUniqueId().toString());
-        team.setDisplayName("display name");
-        team.setCanSeeFriendlyInvisibles(true);
-        team.setAllowFriendlyFire(false);
-        team.setOption(Team.Option.COLLISION_RULE, org.bukkit.scoreboard.Team.OptionStatus.ALWAYS);
-
-        board = new FastBoard(pathway.getBeyonder().getPlayer());
-        board.updateTitle(pathway.getStringColor() + pathway.getBeyonder().getPlayer().getName());
-        board.updateLines("", "§5Pathway", "- " + pathway.getStringColor() + pathway.getName(), "", "§5Sequence", "- " + pathway.getStringColor() + pathway.getSequence().getCurrentSequence() + ": " );
-
-
-
-        //constant loop
-        new BukkitRunnable() {
-            int counter = 0;
-
-            @Override
-            public void run() {
-                //Cancel and return if player, sequence is null or player is not online
-                if (!pathway.getBeyonder().isBeyonder()|| !pathway.getBeyonder().getPlayer().isOnline()|| pathway.getBeyonder().getPlayer() == null || pathway.getSequence() == null) {
-                    cancel();
-                    return;
-                }
-
-                //scoreboard
-                counter++;
-                updateBoard();
-
-
-            }
-        }.runTaskTimer(Plugin.instance, 0,10);
-    }
-    private void updateBoard() {
-        board.updateTitle(pathway.getStringColor() + pathway.getBeyonder().getPlayer().getName());
-        board.updateLines("", "§5Pathway", "- " + pathway.getStringColor() + pathway.getName());
-    }
 
 
 

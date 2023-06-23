@@ -25,7 +25,11 @@ public abstract class Pathway {
 
     public static final String[] validNames = new String[]{
             "sun",
-            "fool"
+            "fool",
+            "door",
+            "demoness",
+            "door",
+            "red_priest"
     };
 
     public Items items;

@@ -46,7 +46,7 @@ public class Steel extends Ability {
                 }
 
             }
-        }.runTaskTimer(Plugin.instance, 1, 0);
+        }.runTaskTimer(Plugin.instance, 0, 0);
     }
     @Override
     public void leftClick() {
