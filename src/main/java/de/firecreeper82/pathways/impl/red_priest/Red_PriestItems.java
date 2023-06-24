@@ -36,7 +36,8 @@ public class Red_PriestItems extends Items {
             abilityInfo.put(9, s9);
 
             String[] s8 = formatAbilityInfo(pathway.getStringColor(), "8: " + names.get(8),
-                    "§4"
+                    "§4You have the power to give enchants to swords and axes ",
+                    "§4You have the power to craft poison potions if you have a spider eye in hand"
             );
             abilityInfo.put(8, s8);
 

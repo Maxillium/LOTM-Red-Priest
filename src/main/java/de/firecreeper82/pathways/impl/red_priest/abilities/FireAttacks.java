@@ -52,8 +52,8 @@ public class FireAttacks extends Ability {
     }
 
     enum Category {
-        Fireball("Summon flames"),
-        FireSpear("Summon a flaming spear"),
+        Fireball("Summons flames"),
+        FireSpear("Summons a flaming spear"),
         Self_Explode("Create an explosion around yourself"),
         Teleport_On("Enables Teleporting"),
         Teleport_Off("Disables Teleporting");
