@@ -46,7 +46,7 @@ public class Red_PriestSequence extends Sequence implements Listener{
     }
     @Override
     public List<Integer> getIds() {
-        Integer[] ids = {2, 1,7,8};
+        Integer[] ids = {2, 1,8,9};
         return Arrays.asList(ids);
     }
 

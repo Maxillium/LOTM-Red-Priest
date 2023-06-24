@@ -28,7 +28,7 @@ public class Weather_Manipulation extends Ability {
     enum Category {
         TORNADO("§fTornado"),
         BLIZZARD("§bBlizzard"),
-        WILDFIRE("§2Wildfire");
+        WILDFIRE("§4Wildfire");
 
         private final String name;
 

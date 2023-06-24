@@ -38,7 +38,7 @@ public class Tracking extends Ability {
             @Override
             public void run () {
 
-                for(Entity entity : Objects.requireNonNull(loc.getWorld()).getNearbyEntities(loc, 15, 15, 15)) {
+                for(Entity entity : Objects.requireNonNull(loc.getWorld()).getNearbyEntities(loc, 20, 20, 20)) {
 
                     if(entity instanceof LivingEntity &&  pathway.getSequence().getUsesAbilities()[identifier - 1] && entity !=p && entity.getWorld().getNearbyEntities(entity.getLocation(),10,10,10).contains(p)) {
                         ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,2,1));

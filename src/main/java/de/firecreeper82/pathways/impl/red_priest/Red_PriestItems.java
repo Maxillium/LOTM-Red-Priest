@@ -93,11 +93,12 @@ public class Red_PriestItems extends Items {
         addAbility(new Tracking(1, pathway, 9, this));
         addAbility(new Provoke(2,pathway,8,this));
         addAbility(new FireAttacks(3,pathway,7,this));
-        addAbility(new Reaping(4,pathway,5,this));
-        addAbility(new Flame_transform(5,pathway,4,this));
-        addAbility(new Steel(6,pathway,4,this));
-        addAbility(new Spirit_World_Cage(7,pathway,2,this,false));
-        addAbility(new Weather_Manipulation(8,pathway,2,this));
+        addAbility(new Weakness_Sense(4,pathway,6,this));
+        addAbility(new Reaping(5,pathway,5,this));
+        addAbility(new Flame_transform(6,pathway,4,this));
+        addAbility(new Steel(7,pathway,4,this));
+        addAbility(new Spirit_World_Cage(8,pathway,2,this,false));
+        addAbility(new Weather_Manipulation(9,pathway,2,this));
     }
 
 
