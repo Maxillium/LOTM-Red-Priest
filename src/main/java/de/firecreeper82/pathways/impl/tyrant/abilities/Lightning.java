@@ -40,7 +40,7 @@ public class Lightning extends NPCAbility {
             return;
 
         outerloop:
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 80; i++) {
             for (Entity entity : loc.getWorld().getNearbyEntities(loc, 1, 1, 1)) {
                 if (entity.getType() == EntityType.ARMOR_STAND || entity == p)
                     continue;
@@ -105,6 +105,13 @@ public class Lightning extends NPCAbility {
         for(int i = 0; i < 50; i++) {
             Util.drawDustsForNearbyPlayers(particleLoc.add(0, -1, 0), 20, 0, 0, 0, dust);
             particleLoc.add(randoms1.get(i), 0, randoms2.get(i));
+        }
+
+        int counter = 100;
+        while (!particleLoc.getBlock().getType().isSolid() && counter > 0) {
+            Util.drawDustsForNearbyPlayers(particleLoc.add(0, -1, 0), 20, 0, 0, 0, dust);
+            particleLoc.add(random.nextDouble(-.5, .5), 0, random.nextDouble(-.5, .5));
+            counter--;
         }
 
         for(Entity entity : loc.getWorld().getNearbyEntities(particleLoc, 4, 2, 4)) {
