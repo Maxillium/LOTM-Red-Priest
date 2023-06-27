@@ -16,7 +16,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Objects;
-//Intended to put the Glowing effect on nearby entities in order to locate them. As a consequence should bypass Invisibility too.
+
 public class Flame_transform extends Ability {
     public Flame_transform(int identifier, Pathway pathway, int sequence, Items items) {
         super(identifier, pathway, sequence, items);

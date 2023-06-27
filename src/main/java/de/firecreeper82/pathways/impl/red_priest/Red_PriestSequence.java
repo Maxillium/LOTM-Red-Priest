@@ -5,39 +5,28 @@ import de.firecreeper82.lotm.Plugin;
 import de.firecreeper82.pathways.Pathway;
 import de.firecreeper82.pathways.Sequence;
 import de.firecreeper82.pathways.impl.red_priest.abilities.Reaping;
-import fr.mrmicky.fastboard.FastBoard;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.item.alchemy.Potion;
-import org.bukkit.Bukkit;
+import de.firecreeper82.pathways.impl.red_priest.abilities.Weakness_Sense;
 import org.bukkit.Color;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityEvent;
+import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
-import org.bukkit.scoreboard.Team;
+
 
 import java.util.*;
 
 public class Red_PriestSequence extends Sequence implements Listener{
-    private FastBoard board;
-    private List<Player> team1;
 
     public Red_PriestSequence(Pathway pathway, int optionalSequence) {
         super(pathway, optionalSequence);
@@ -183,7 +172,7 @@ public class Red_PriestSequence extends Sequence implements Listener{
 
                             @Override
                             public void run() {
-                                e.getEntity().getWorld().createExplosion(e.getEntity().getLocation(), 1, true, true);
+                                e.getEntity().getWorld().createExplosion(e.getEntity().getLocation(), 2, true, true,p);
                                 pathway.getSequence().removeSpirituality(300);
                                 cancel();
                             }
@@ -196,6 +185,26 @@ public class Red_PriestSequence extends Sequence implements Listener{
             }
         }
     }
+    @EventHandler
+    public void interact(PlayerInteractAtEntityEvent event)
+    {
+        if (event.getRightClicked().getType().isAlive()) {
+            LivingEntity livingEnt = (LivingEntity) event.getRightClicked();
+            double health = livingEnt.getHealth();
+            new BukkitRunnable() {
+                @Override
+                public void run () {
+                    if (!Reaping.reaping && Weakness_Sense.sense && event.getPlayer().getInventory().getItemInMainHand() == null) {
+                        event.getPlayer().sendMessage("The entities health is " + health);
+                        cancel();
+                    }
+
+                }
+            }.runTaskTimer(Plugin.instance, 0, 0);
+        }
+
+    }
+
 
 
 

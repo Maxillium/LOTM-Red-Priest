@@ -29,7 +29,7 @@ public class Weakness_Sense extends Ability implements Listener {
     private Weakness_Sense.Category selectedCategory = Weakness_Sense.Category.On;
     private final Weakness_Sense.Category[] categories = Weakness_Sense.Category.values();
     private int selected = 0;
-    private boolean sense;
+    public static boolean sense;
     public  Weakness_Sense(int identifier, Pathway pathway, int sequence, Items items) {
         super(identifier, pathway, sequence, items);
         items.addToSequenceItems(identifier - 1, sequence);
@@ -84,16 +84,6 @@ public class Weakness_Sense extends Ability implements Listener {
         if(p == null)
             p = pathway.getBeyonder().getPlayer();
         p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent("§5Selected Use-case: §f" + selectedCategory.name));
-    }
-    @EventHandler
-    public void interact(PlayerInteractAtEntityEvent p, Entity e, Vector pos)
-    {
-        LivingEntity livingEnt = (LivingEntity) e;
-        double health = livingEnt.getHealth();
-        if(!Reaping.reaping && sense)
-        {
-            p.getPlayer().sendMessage("The entities health is " + health);
-        }
     }
     @Override
     public ItemStack getItem() {

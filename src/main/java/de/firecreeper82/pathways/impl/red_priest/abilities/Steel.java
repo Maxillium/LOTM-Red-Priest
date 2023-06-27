@@ -9,6 +9,8 @@ import de.firecreeper82.pathways.impl.red_priest.Red_PriestItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -34,7 +36,6 @@ public class Steel extends Ability {
             @Override
             public void run () {
                 p.getWorld().spawnParticle(Particle.ASH, p.getEyeLocation(), 50, 1.1, 1.1, 1.1, 0);
-                p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION,2,2,true,false,false));
                 drain++;
                 if(drain >= 20) {
                     drain = 0;
@@ -53,6 +54,14 @@ public class Steel extends Ability {
         pathway.getSequence().getUsesAbilities()[identifier - 1] = false;
     }
 
+    @EventHandler
+    private void damage(EntityDamageEvent e)
+    {
+        if(pathway.getSequence().getUsesAbilities()[identifier - 1] && e.getEntity() == p && e.getCause() == EntityDamageEvent.DamageCause.CONTACT)
+        {
+            e.setDamage(e.getDamage() -20);
+        }
+    }
     @Override
     public ItemStack getItem() {
         return Red_PriestItems.createItem(Material.IRON_INGOT, "Steel transform", "500/s", identifier, 4, Objects.requireNonNull(Bukkit.getPlayer(pathway.getUuid())).getName());
