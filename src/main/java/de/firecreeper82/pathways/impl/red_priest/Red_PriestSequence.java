@@ -35,7 +35,7 @@ public class Red_PriestSequence extends Sequence implements Listener{
     }
     @Override
     public List<Integer> getIds() {
-        Integer[] ids = {2, 1,8,9};
+        Integer[] ids = {2, 1,9,10};
         return Arrays.asList(ids);
     }
 
@@ -173,6 +173,7 @@ public class Red_PriestSequence extends Sequence implements Listener{
                             @Override
                             public void run() {
                                 e.getEntity().getWorld().createExplosion(e.getEntity().getLocation(), 2, true, true,p);
+                                ((LivingEntity) e).addPotionEffect(new PotionEffect(PotionEffectType.SLOW,30,1,true,false));
                                 pathway.getSequence().removeSpirituality(300);
                                 cancel();
                             }
