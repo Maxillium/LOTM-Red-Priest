@@ -8,12 +8,14 @@ import de.firecreeper82.pathways.impl.red_priest.abilities.Reaping;
 import de.firecreeper82.pathways.impl.red_priest.abilities.Weakness_Sense;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -123,7 +125,7 @@ public class Red_PriestSequence extends Sequence implements Listener{
                     PotionMeta meta = ((PotionMeta) item.getItemMeta());
                     assert meta != null;
                     meta.setColor(Color.GREEN);
-                    meta.addCustomEffect(new PotionEffect(PotionEffectType.POISON, 120, 1), true);
+                    meta.addCustomEffect(new PotionEffect(PotionEffectType.POISON, 200, 1), true);
                     item.setItemMeta(meta);
 
 
@@ -187,14 +189,13 @@ public class Red_PriestSequence extends Sequence implements Listener{
         }
     }
     @EventHandler
-    public void interact(PlayerInteractAtEntityEvent event)
-    {
+    public void interact(PlayerInteractAtEntityEvent event) {
         if (event.getRightClicked().getType().isAlive()) {
             LivingEntity livingEnt = (LivingEntity) event.getRightClicked();
             double health = livingEnt.getHealth();
             new BukkitRunnable() {
                 @Override
-                public void run () {
+                public void run() {
                     if (!Reaping.reaping && Weakness_Sense.sense && event.getPlayer().getInventory().getItemInMainHand() == null) {
                         event.getPlayer().sendMessage("The entities health is " + health);
                         cancel();
@@ -203,8 +204,24 @@ public class Red_PriestSequence extends Sequence implements Listener{
                 }
             }.runTaskTimer(Plugin.instance, 0, 0);
         }
-
     }
+        @EventHandler
+        public void interact(EntityTargetEvent event)
+        {
+            Player e = (Player) event.getTarget();
+            if (e == getPathway().getBeyonder().getPlayer() && e != null && getPathway().getSequence().getCurrentSequence() <= 7) {
+                new BukkitRunnable() {
+                    @Override
+                    public void run () {
+                           e.playSound(e, Sound.ITEM_GOAT_HORN_SOUND_0,4,2);
+                            cancel();
+                        }
+
+                    }.runTaskTimer(Plugin.instance, 0, 0);
+                }
+            }
+
+
 
 
 
