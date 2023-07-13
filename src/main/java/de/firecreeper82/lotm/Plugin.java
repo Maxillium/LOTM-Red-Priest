@@ -83,7 +83,7 @@ public final class Plugin extends JavaPlugin {
 
         try {
             characteristic = new Characteristic();
-        } catch (MalformedURLException ignored) {
+            } catch (MalformedURLException ignored) {
         }
 
         recipe = new Recipe();
