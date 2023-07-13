@@ -11,7 +11,9 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.*;
 import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Damageable;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BlockIterator;
@@ -82,56 +84,40 @@ public class FireAttacks extends Ability {
     }
 
     private void fireball() {
-        p = getPathway().getBeyonder().getPlayer();
-        Vector direction = p.getLocation().getDirection().normalize().multiply(.55);
-        Location loc = p.getLocation().add(0, 1.5, 0);
+        p = pathway.getBeyonder().getPlayer();
+
+        Vector vector = p.getLocation().getDirection().normalize().multiply(.5);
+        Location loc = p.getEyeLocation().clone();
+        if(loc.getWorld() == null)
+            return;
         World world = loc.getWorld();
 
-        if(world == null)
-            return;
+        for(int i = 0; i < 30; i++) {
+            loc.add(vector);
+            world.spawnParticle(Particle.SMALL_FLAME, loc, 40, .25, .25, .25, 0);
 
-        world.playSound(loc, Sound.BLOCK_BLASTFURNACE_FIRE_CRACKLE, 8, 1);
+            if(world.getNearbyEntities(loc, 1, 1, 1).isEmpty())
+                continue;
 
-        new BukkitRunnable() {
-            int counter = 20 * 30;
-            @Override
-            public void run() {
+            if(loc.getBlock().getType().isSolid()) {
+                loc.getWorld().createExplosion(loc,2,false,true,p);
+                loc.clone().subtract(vector).getBlock().setType(Material.FIRE);
 
-                double x = Math.cos(counter);
-                double z = Math.sin(counter);
-                double y = Math.sin(counter);
-
-                for(Player p : Bukkit.getOnlinePlayers()) {
-                    if(p.getWorld() != loc.getWorld() || p.getLocation().distance(loc) > 100)
-                        continue;
-                    if(loc.getWorld() == null)
-                        return;
-
-                    loc.getWorld().spawnParticle(Particle.SMALL_FLAME, loc.getX() + x, loc.getY(), loc.getZ() + z, 15, 0.05, 0.05, 0.05, 0);
-                    loc.getWorld().spawnParticle(Particle.SMALL_FLAME, loc.getX() + x, loc.getY() + y, loc.getZ(), 15, 0.05, 0.05, 0.05, 0);
-                    y = Math.cos(counter);
-                    Util.drawParticleSphere(loc, .35, 10, null, null, 0, Particle.SMALL_FLAME);
-                    loc.getWorld().spawnParticle(Particle.SMALL_FLAME, loc.getX(), loc.getY() + y, loc.getZ() + z, 15, 0.05, 0.05, 0.05, 0);
-                }
-
-                if(loc.getBlock().getType().isSolid())
-                    counter = 0;
-
-                for(Entity entity : world.getNearbyEntities(loc,  1, 1, 1)) {
-                    if(entity instanceof LivingEntity livingEntity && entity != p && entity.getType() != EntityType.ARMOR_STAND) {
-                        livingEntity.damage(8.5 * getMultiplier());
-                        counter = 0;
-                    }
-                }
-
-                loc.add(direction);
-
-                counter--;
-                if(counter <= 0) {
-                    cancel();
-                }
+                break;
             }
-        }.runTaskTimer(Plugin.instance, 0, 1);
+
+            boolean cancelled = false;
+            for(Entity entity : world.getNearbyEntities(loc, 1, 1, 1)) {
+                if(!(entity instanceof LivingEntity livingEntity) || entity == p)
+                    continue;
+                livingEntity.damage(15, p);
+                livingEntity.setFireTicks(20 * 40);
+                cancelled = true;
+            }
+
+            if(cancelled)
+                break;
+        }
     }
 
     private void firespear()  {

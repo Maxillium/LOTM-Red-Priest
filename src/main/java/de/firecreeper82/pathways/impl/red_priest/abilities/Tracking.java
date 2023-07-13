@@ -5,14 +5,12 @@ import de.firecreeper82.lotm.Plugin;
 import de.firecreeper82.pathways.Ability;
 import de.firecreeper82.pathways.Items;
 import de.firecreeper82.pathways.Pathway;
-import de.firecreeper82.pathways.impl.fool.FoolPathway;
 import de.firecreeper82.pathways.impl.red_priest.Red_PriestItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Monster;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -43,15 +41,13 @@ public class Tracking extends Ability {
                 for(Entity entity : Objects.requireNonNull(loc.getWorld()).getNearbyEntities(loc, 20, 20, 20)) {
 
                     if(entity instanceof LivingEntity &&  pathway.getSequence().getUsesAbilities()[identifier - 1] && entity !=p && entity.getWorld().getNearbyEntities(entity.getLocation(),10,10,10).contains(p)) {
-                        if(((LivingEntity) entity).isInvisible() && !(entity instanceof FoolPathway))
-                        {
-                            ((LivingEntity) entity).setInvisible(false);
-
-                        }
-                        entity.setGlowing(true);
+                        ((LivingEntity) entity).addPotionEffect(new PotionEffect(PotionEffectType.GLOWING,2,1));
 
                     }
 
+                    //if(entity instanceof LivingEntity && entity != Objects.requireNonNull(loc.getWorld().getNearbyEntities(loc, 10, 10, 10))) {
+                      //  ((LivingEntity) entity).removePotionEffect(PotionEffectType.GLOWING);
+                    //}
 
                 }
                 drain++;

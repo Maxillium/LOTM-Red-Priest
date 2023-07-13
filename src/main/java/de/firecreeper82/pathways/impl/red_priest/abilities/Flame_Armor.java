@@ -36,7 +36,7 @@ public class Flame_Armor extends Ability implements Listener {
             int drain = 0;
             @Override
             public void run () {
-                p.getWorld().spawnParticle(Particle.SMALL_FLAME, p.getEyeLocation(), 25, 1.1, 1.1, 1.1, 0);
+                p.getWorld().spawnParticle(Particle.SMALL_FLAME, p.getEyeLocation(), 50, 1.1, 1.1, 1.1, 0);
                 p.removePotionEffect(PotionEffectType.POISON);
                 p.removePotionEffect(PotionEffectType.CONFUSION);
                 drain++;
